@@ -1,4 +1,8 @@
 #pragma once
+#include <FS.h>
+
+File logFile;
+String currentFileName;
 
 #define DEBUG 1
 // Conditional definition for debugging if DEBUG is 1 then it will print to serial port.

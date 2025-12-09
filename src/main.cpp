@@ -1,8 +1,10 @@
 #include <Arduino.h>
 #include "globals.h"
 #include "gnssHelper.h"
-
-#define MODE_SELECTION_PIN 32 // GPIO pin for mode selection button
+#include "sdHelper.h"
+// PIN HIGH IS "OFF" or Access Point Mode, PIN LOW IS "ON" or Recording mode.
+#define MODE_SELECTION_PIN 15 // GPIO pin for mode selection button
+bool isRecordingActive = false;
 
 void setup()
 {
@@ -26,9 +28,42 @@ void setup()
 
   // Start by initializing the GNSS module.
   gnssHelper::gnssInitialize();
+  while(gnssHelper::fixMode() < 3) {
+    // Wait here until we have a 3D fix.
+    debugln("Waiting for 3D fix...");
+    delay(1000);
+  }
+  debugln("3D Fix acquired.");
+  // Now that we have a fix, let's verify we have an SD Card available.
+  // Start by initializing the SD Card helper.
+  sdHelper::sdInitialize();
+  if (!sdHelper::isSdAvailable()) {
+    debugln("SD Card not available. Halting execution.");
+    while (1)
+      ; // Halt execution if SD Card is not available.
+  } else {
+    debugln("SD Card is available.");
+  }
+  // Before we start the program we need to ensure that the GNSS has a position and that the SD Card is available.
 }
 
 void loop()
 {
-  gnssHelper::originalLoop();
+  int modeButtonState = digitalRead(MODE_SELECTION_PIN);
+  if (modeButtonState == LOW)
+  {
+    isRecordingActive = true;
+    // Recording mode
+    debugln("Recording mode selected");
+    gnssHelper::originalLoop();
+  } else {
+    // Not recording so we need to check to see if recording was active before we do anything else.
+    // If it was active we need to finalize the file before proceeding.
+    if (isRecordingActive) {
+      sdHelper::closeFile();
+    }
+    isRecordingActive = false;
+    // Access Point mode
+    debugln("Access Point mode selected");
+  }
 }

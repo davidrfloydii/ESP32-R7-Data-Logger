@@ -31,6 +31,10 @@ namespace gnssHelper
         startTime = millis();
     }
 
+    int fixMode() {
+        return myGNSS.getFixType();
+    }
+
     void originalLoop()
     {
         // Query module every 25 ms. Doing it more often will just cause I2C traffic.
