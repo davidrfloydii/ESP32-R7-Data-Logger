@@ -17,7 +17,7 @@ namespace sdHelper
         else
         {
             debugln("Log file created successfully.");
-            logFile.println("Latitude,Longitude,Altitude(m),GroundSpeed,DateTimeUTC");
+            logFile.println("Latitude(Scaled),Longitude(Scaled),Altitude(m),GroundSpeed(mm/sec),DateTimeUTC");
         }
     }
 

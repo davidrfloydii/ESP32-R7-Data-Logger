@@ -91,18 +91,14 @@ namespace gnssHelper
     {
         String myGpString = "";
         lastTime = millis(); // Update the timer
-        float latitude = (myGNSS.getLatitude() / 10000000.0);
-        float longitude = (myGNSS.getLongitude() / 10000000.0);
+        float latitude = myGNSS.getLatitude(); // Will need to be scaled on processing
+        float longitude = myGNSS.getLongitude(); // Will need to be scaled on processing
         uint32_t altitude = myGNSS.getAltitude();
         uint32_t epoch = myGNSS.getUnixEpoch();
-        uint32_t groundSpeed = (myGNSS.getGroundSpeed() * 0.00223694); // Convert from mm/s to mph
-        char bufferLat[15];
-        char bufferLon[15];
-        dtostrf(latitude, 10, 7, bufferLat);
-        dtostrf(longitude, 11, 7, bufferLon);
-        myGpString += String(bufferLat);
+        uint32_t groundSpeed = myGNSS.getGroundSpeed(); // Will need to be converted from mm/s to mph
+        myGpString += String(latitude);
         myGpString += ",";
-        myGpString += String(bufferLon);
+        myGpString += String(longitude);
         myGpString += ",";
         myGpString += String(altitude);
         myGpString += ",";
