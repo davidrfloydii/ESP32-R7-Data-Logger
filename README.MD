@@ -1,0 +1,2 @@
+# Project Overview
+This project is designed to allow for a custom telemetry system on the Yamaha R7 motorcycle. After using many different lap timers, I wanted more. I wanted the throttle position, engine temp, rpm's and more. This project aims to meet those needs.
