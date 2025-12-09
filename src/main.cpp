@@ -63,7 +63,9 @@ void loop()
     isRecordingActive = true;
     // Recording mode
     debugln("Recording mode selected");
-    gnssHelper::originalLoop();
+    String gnssData = gnssHelper::getGnssDataString();
+    sdHelper::appendToFile(gnssData);
+    debugln("GNSS data logged: " + gnssData);
   }
   else
   {
