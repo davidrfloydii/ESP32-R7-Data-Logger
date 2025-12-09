@@ -71,6 +71,8 @@ void loop()
     // If it was active we need to finalize the file before proceeding.
     if (isRecordingActive)
     {
+      debugln("Finalizing log file before switching to Access Point mode.");
+      delay(5000);
       sdHelper::closeFile();
     }
     isRecordingActive = false;

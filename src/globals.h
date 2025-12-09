@@ -2,7 +2,8 @@
 //#include <SD.h>
 #include <SdFat.h>
 
-FsFile logFile;
+SdFat sd;
+SdFile logFile;
 String currentFileName;
 
 #define DEBUG 1
