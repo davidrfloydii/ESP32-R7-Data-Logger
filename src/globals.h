@@ -6,7 +6,7 @@ SdFat sd;
 SdFile logFile;
 String currentFileName;
 
-#define DEBUG 1
+#define DEBUG 0
 // Conditional definition for debugging if DEBUG is 1 then it will print to serial port.
 // If DEBUG = 0 then the lines will be removed by the compiler.
 #if DEBUG == 1

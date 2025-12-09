@@ -15,13 +15,6 @@ void setup()
 #if DEBUG == 0
   // This will be the only line that gets printed to the serial port if debugging is disabled.
   Serial.println("Debugging disabled");
-#else
-  // If debugging is wait hold up starting until the serial port is connected.
-  // Helpful to ensure you see all messages. Also helpful to ensure it gets turned off in production
-  // environments since the app will not run without the connection.
-  while (!Serial)
-    ;
-  ; // Intentiional holding of the application. Disable DEBUG in globals.h to run without serial connection.
 #endif
 
   // Setup input buttons so that control for the startup sequence is possible.
