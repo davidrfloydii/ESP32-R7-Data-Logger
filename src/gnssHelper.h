@@ -35,6 +35,48 @@ namespace gnssHelper
         return myGNSS.getFixType();
     }
 
+    void setCurrentFileName() {
+        // Create a filename based on the current date and time from GNSS
+        int year = myGNSS.getYear();
+        int month = myGNSS.getMonth();
+        int day = myGNSS.getDay();
+        int hour = myGNSS.getHour();
+        int minute = myGNSS.getMinute();
+        int second = myGNSS.getSecond();
+
+        // Format: LOG_YYYYMMDD_HHMMSS.CSV
+        currentFileName = "LOG_";
+        if (year < 2000) {
+            currentFileName += "20";
+        } else {
+            currentFileName += String(year);
+        }
+        if (month < 10) {
+            currentFileName += "0";
+        }
+        currentFileName += String(month);
+        if (day < 10) {
+            currentFileName += "0";
+        }
+        currentFileName += String(day);
+        currentFileName += "_";
+        if (hour < 10) {
+            currentFileName += "0";
+        }
+        currentFileName += String(hour);
+        if (minute < 10) {
+            currentFileName += "0";
+        }
+        currentFileName += String(minute);
+        if (second < 10) {
+            currentFileName += "0";
+        }
+        currentFileName += String(second);
+        currentFileName += ".CSV";
+        debug("Log file name set to: ");
+        debugln(currentFileName);
+    }
+
     void originalLoop()
     {
         // Query module every 25 ms. Doing it more often will just cause I2C traffic.

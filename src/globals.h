@@ -1,7 +1,8 @@
 #pragma once
-#include <FS.h>
+//#include <SD.h>
+#include <SdFat.h>
 
-File logFile;
+FsFile logFile;
 String currentFileName;
 
 #define DEBUG 1
