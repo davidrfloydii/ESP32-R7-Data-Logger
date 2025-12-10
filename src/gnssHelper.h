@@ -22,7 +22,7 @@ namespace gnssHelper
                 ;
         }
         myGNSS.setI2COutput(COM_TYPE_UBX); // Set the I2C port to output UBX only (turn off NMEA noise)
-        myGNSS.setNavigationFrequency(25); // Set output to 5 times a second
+        myGNSS.setNavigationFrequency(50); // Set output to 5 times a second
 
         uint8_t rate = myGNSS.getNavigationFrequency(); // Get the update rate of this module
         debug("Current update rate: ");

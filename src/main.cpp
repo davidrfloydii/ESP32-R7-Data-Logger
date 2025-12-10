@@ -3,9 +3,12 @@
 #include "gnssHelper.h"
 #include "sdHelper.h"
 // PIN HIGH IS "OFF" or Access Point Mode, PIN LOW IS "ON" or Recording mode.
-#define MODE_SELECTION_PIN 48 // GPIO pin for mode selection button
+#define MODE_SELECTION_PIN 33 // GPIO pin for mode selection button
 bool isRecordingActive = false;
-
+String currentData = "";
+unsigned long previousWriteMillis = 0;
+const unsigned long writeInterval = 40; // Write data every 40 milliseconds
+unsigned long previousGnssRead = 0;
 void setup()
 {
   // Always start serial first
@@ -51,15 +54,21 @@ void setup()
 // The main loop handles two modes of operation: Recording mode and Access Point mode.
 void loop()
 {
+  unsigned long currentMillis = millis();
+  // Check every writeInterval milliseconds to see if we need to log data.
   int modeButtonState = digitalRead(MODE_SELECTION_PIN);
   if (modeButtonState == LOW)
   {
+    if (currentMillis - previousWriteMillis >= writeInterval) {
+      sdHelper::appendToFile(currentData);
+      currentData = ""; // Clear the current data after writing
+      previousWriteMillis = currentMillis;
+    }
     isRecordingActive = true;
     // Recording mode
     debugln("Recording mode selected");
-    String gnssData = gnssHelper::getGnssDataString();
-    sdHelper::appendToFile(gnssData);
-    debugln("GNSS data logged: " + gnssData);
+    currentData = gnssHelper::getGnssDataString();
+    debugln("GNSS data logged: " + currentData);
   }
   else
   {

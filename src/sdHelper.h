@@ -1,5 +1,6 @@
 #pragma once
 #include "globals.h"
+#define ONE_BIT_MODE false
 // Define a large buffer size for characters (e.g., 4KB)
 const size_t BUFFER_SIZE_CHARS = 4096;
 char writeBuffer[BUFFER_SIZE_CHARS];
@@ -10,6 +11,16 @@ char tempLine[128]; // Small buffer for formatting a single line
 
 namespace sdHelper
 {
+
+    // These are the pins reserved for ESP32 WROOM modules SD_MMC
+    // *NOTE: A button to pull IO2 to ground is required to flash.
+    int clk = 14;
+    int cmd = 15;
+    int d0 = 2;
+    int d1 = 4;
+    int d2 = 12;
+    int d3 = 13;
+
     void createFileAndWriteHeader()
     {
         logFile = SD_MMC.open(currentFileName.c_str(), FILE_WRITE);
@@ -26,25 +37,18 @@ namespace sdHelper
     void sdInitialize()
     {
         debugln("Initializing SD card...");
-
+        pinMode(clk, INPUT_PULLUP);
+        pinMode(cmd, INPUT_PULLUP);
+        pinMode(d1, INPUT_PULLUP);
+        pinMode(d2, INPUT_PULLUP);
+        pinMode(d3, INPUT_PULLUP);
         // Initialize SdFat or print a detailed error message and halt
         // Use half speed like the native library.
         // change to SPI_FULL_SPEED for more performance.
-        if (!SD_MMC.begin("/sdcard", false, false, 40000, 5))
+        if (!SD_MMC.begin("/sdcard", ONE_BIT_MODE, false, SDMMC_FREQ_HIGHSPEED, 1))
         {
             debugln("SD Card Mount Failed");
             return;
-        }
-        uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024);
-        debugf("SD_MMC mounted, size: %llu MB\n", cardSize);
-        if (cardSize == 0)
-        {
-            debugln("Card size is 0 MB. SD Card not available.");
-            return;
-        }
-        else
-        {
-            debugln("SD Card is available.");
         }
         return;
     }
