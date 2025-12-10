@@ -1,1 +1,2 @@
-# NOTE THIS PROJECT WILL BE ABANDONED GIVEN THE LIMITATIONS OF THE ESP32-WROOM-32 SD SPEEDS. A NEW PROJECT WILL BE ADDED THAT USES THE ESP32P4
+# Project Overview
+This project is designed to allow for a custom telemetry system on the Yamaha R7 motorcycle. After using many different lap timers, I wanted more. I wanted the throttle position, engine temp, rpm's and more. This project aims to meet those needs.

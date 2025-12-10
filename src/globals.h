@@ -1,12 +1,11 @@
 #pragma once
 //#include <SD.h>
-#include <SdFat.h>
+#include "SD_MMC.h"
 
-SdFat sd;
-SdFile logFile;
+File logFile;
 String currentFileName;
 
-#define DEBUG 0
+#define DEBUG 1
 // Conditional definition for debugging if DEBUG is 1 then it will print to serial port.
 // If DEBUG = 0 then the lines will be removed by the compiler.
 #if DEBUG == 1

@@ -47,7 +47,7 @@ namespace gnssHelper
         int second = myGNSS.getSecond();
 
         // Format: LOG_YYYYMMDD_HHMMSS.CSV
-        currentFileName = "LOG_";
+        currentFileName = "/LOG_";
         if (year < 2000)
         {
             currentFileName += "20";
@@ -111,7 +111,7 @@ namespace gnssHelper
         uint8_t hour = myGNSS.getHour();
         uint8_t minute = myGNSS.getMinute();
         uint8_t second = myGNSS.getSecond();
-        myGpString += String(year) + "-" + String(month) + "-" + String(day) + +" " + String(hour) + ":" + String(minute) + ":" + String(second) + "." + String(epoch * 1000000);
+        myGpString += String(year) + "-" + String(month) + "-" + String(day) + +" " + String(hour) + ":" + String(minute) + ":" + String(second) + "." + String(epoch * 1000000) + "\n";
         return myGpString;
     }
 

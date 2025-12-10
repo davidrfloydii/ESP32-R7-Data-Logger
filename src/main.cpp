@@ -3,13 +3,13 @@
 #include "gnssHelper.h"
 #include "sdHelper.h"
 // PIN HIGH IS "OFF" or Access Point Mode, PIN LOW IS "ON" or Recording mode.
-#define MODE_SELECTION_PIN 15 // GPIO pin for mode selection button
+#define MODE_SELECTION_PIN 48 // GPIO pin for mode selection button
 bool isRecordingActive = false;
 
 void setup()
 {
   // Always start serial first
-  Serial.begin(500000);
+  Serial.begin(921600);
 // Before we do anything else we check if debugging is enabled. Just in case we write out that it's not
 // this is helpful if you forget to set the flag and are looking but seeing no serial data.
 #if DEBUG == 0
@@ -29,6 +29,7 @@ void setup()
     delay(1000);
   }
   debugln("3D Fix acquired.");
+  gnssHelper::setCurrentFileName();
   // Now that we have a fix, let's verify we have an SD Card available.
   // Start by initializing the SD Card helper.
   sdHelper::sdInitialize();
