@@ -1,5 +1,8 @@
 #pragma once
 #include "SD_MMC.h"
+#define CAN_RX 16
+#define CAN_TX 17
+
 
 File logFile;
 String currentFileName;
